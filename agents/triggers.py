@@ -14,10 +14,13 @@ def should_check_data_leakage(agent, node: SearchNode) -> bool:
     metric_value = node.metric.value
     maximize = agent.metric_maximize
 
+    # Exact float equality almost never fires in practice: a leaked AUC lands
+    # on 0.99997, a leaked RMSE on 1.2e-08. Compare against a threshold instead,
+    # keeping the old exact-1.0 / exact-0.0 cases inside the new bounds.
     if maximize:
-        is_extreme = (metric_value == 1.0)
+        is_extreme = (metric_value >= agent.acfg.leakage_max_threshold)
     else:
-        is_extreme = (metric_value == 0.0)
+        is_extreme = (metric_value <= agent.acfg.leakage_min_threshold)
 
     if is_extreme:
         logger.info(
