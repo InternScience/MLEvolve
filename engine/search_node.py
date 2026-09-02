@@ -198,12 +198,27 @@ class SearchNode(DataClassJsonMixin):
         logger.info("fetch_child_memory")
         summary = []
 
+        candidates = [n for n in self.children
+                      if n.is_buggy is not None or n.stage == "draft"]
+
+        # The metric direction is carried by MetricValue.maximize. Without it a
+        # minimize metric (RMSE, MAE, logloss) is ranked backwards and the model
+        # is shown the worst sibling as "Attempt #1". Same convention as
+        # engine/conditions.py: fall back to maximize when unknown.
+        maximize = next(
+            (n.metric.maximize for n in candidates
+             if n.metric is not None and n.metric.maximize is not None),
+            True,
+        )
+        missing = float('-inf') if maximize else float('inf')
+
         sorted_children = sorted(
-            [n for n in self.children if n.is_buggy is not None or n.stage == "draft"],
+            candidates,
             key=lambda n: (
                 n.is_buggy is False,
                 n.is_buggy is not None,
-                n.metric.value if (n.metric and n.metric.value is not None) else float('-inf')
+                (n.metric.value if (n.metric and n.metric.value is not None)
+                 else missing) * (1 if maximize else -1)
             ),
             reverse=True
         )
@@ -249,7 +264,9 @@ class SearchNode(DataClassJsonMixin):
             if executed:
                 stats_parts.append(f"{len(executed)} executed")
                 if successful:
-                    best_metric = max(n.metric.value for n in successful if n.metric and n.metric.value is not None)
+                    values = [n.metric.value for n in successful
+                              if n.metric and n.metric.value is not None]
+                    best_metric = max(values) if maximize else min(values)
                     stats_parts.append(f"{len(successful)} successful (best: {best_metric:.4f})")
                 else:
                     stats_parts.append(f"0 successful (all failed or buggy)")
