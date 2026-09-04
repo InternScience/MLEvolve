@@ -102,6 +102,9 @@ class AgentConfig:
     use_evolution: bool = True
     use_fusion: bool = True
     use_aggregation: bool = True
+    # Bounds for the data-leakage trigger (see agents/triggers.py).
+    leakage_max_threshold: float = 0.999
+    leakage_min_threshold: float = 1e-6
 @dataclass
 class ExecConfig:
     timeout: int

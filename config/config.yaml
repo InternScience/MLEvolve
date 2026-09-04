@@ -56,6 +56,9 @@ agent:
 
   # --- Submission check ---
   check_data_leakage: True
+  # A metric at or beyond these bounds triggers the data-leakage check.
+  leakage_max_threshold: 0.999
+  leakage_min_threshold: 1e-6
 
   # --- Code gen mode ---
   use_diff_mode: True                 # Multi-Mode Codegen
