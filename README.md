@@ -13,6 +13,7 @@ An agentic MLE (Machine Learning Engineering) system that automatically solves K
 
 ## Timeline
 
+- **2026-10-15** — 🔥 We release **MLExpert**, a 35B MoE agentic model for autonomous MLE, achieving **72.7%** medal rate on MLE-Bench Lite. [[Paper](https://arxiv.org/abs/2610.22344)] [[Code](https://github.com/InternScience/MLExpert)] [[Model](https://huggingface.co/InternScience/MLExpert)]
 - **2026-06-05** — Paper released on arXiv: [MLEvolve: A Self-Evolving Framework for Automated Machine Learning Algorithm Discovery](https://arxiv.org/abs/2606.06473).
 - **2026-06-01** — **65.3% medal rate** on full MLE-bench (75 tasks), also achieves competitive results on mathematical optimization tasks.
 - **2026-03-23** — Now supports OpenAI-compatible APIs (GPT, Qwen, DeepSeek, etc.). Models with function calling support are recommended for best performance.
@@ -108,6 +109,11 @@ Comparison on 15 mathematical programming tasks. Each column header carries the 
 | Min overlap | Minimum Overlap Problem |
 
 </details>
+
+
+## MLExpert: Agentic Model for MLE
+
+We further release **[MLExpert](https://arxiv.org/abs/2610.22344)**, a 35B MoE agentic model post-trained for long-horizon autonomous MLE via hierarchical agentic SFT and Windowed Interaction RL (WIRL). It raises the MLE-Bench Lite medal rate from 37.9% to **72.7%**, comparable to much larger frontier models. See the [code](https://github.com/InternScience/MLExpert) and [model weights](https://huggingface.co/InternScience/MLExpert).
 
 
 ## Coding Module in AI-Scientist
