@@ -13,6 +13,11 @@ from agents.triggers import register_node
 logger = logging.getLogger("MLEvolve")
 
 
+def _join_branch_summaries(summaries: List[str]) -> str:
+    separator = "\n" + "-" * 80 + "\n"
+    return separator.join(summaries)
+
+
 def _collect_branch_representatives(agent) -> List[SearchNode]:
     representatives = []
 
@@ -111,7 +116,7 @@ def run(
             )
             reference_summaries.append(branch_info)
 
-    reference_experiences = "\n" + "-" * 80 + "\n".join(reference_summaries)
+    reference_experiences = _join_branch_summaries(reference_summaries)
 
     prompt: Any = {
         "Introduction": introduction,
