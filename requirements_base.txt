@@ -69,6 +69,7 @@ dnspython==2.7.0
 
 
 cryptography==46.0.3
+joserfc==1.6.8
 cffi==2.0.0
 pycparser==2.22
 pycryptodome==3.23.0
@@ -77,7 +78,7 @@ pyasn1==0.6.1
 pyasn1_modules==0.4.1
 rsa==4.9
 PyJWT==2.10.1
-Authlib==1.6.5
+Authlib==1.9.2
 
 
 google-ai-generativelanguage==0.6.15
